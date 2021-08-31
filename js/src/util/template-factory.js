@@ -69,8 +69,8 @@ class TemplateFactory {
     const templateWrapper = document.createElement('div')
     templateWrapper.innerHTML = this._maybeSanitize(this._config.template)
 
-    for (const [selector, text] of Object.entries(this._config.content)) {
-      this._setContent(templateWrapper, text, selector)
+    for (const selector of Object.keys(this._config.content)) {
+      this._setContent(templateWrapper, this._config.content[selector], selector)
     }
 
     const template = templateWrapper.children[0]
@@ -97,8 +97,8 @@ class TemplateFactory {
   }
 
   _checkContent(arg) {
-    for (const [selector, content] of Object.entries(arg)) {
-      typeCheckConfig(NAME, { selector, entry: content }, DefaultContentType)
+    for (const selector of Object.keys(arg)) {
+      typeCheckConfig(NAME, { selector, entry: arg[selector] }, DefaultContentType)
     }
   }
 
